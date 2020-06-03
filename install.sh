@@ -8,4 +8,5 @@ sudo chsh -s $(which zsh)
 
 touch ~/.zshrc
 zsh ~/.dotfiles/setup_prezto.sh
+~/.dotfiles/setup_vim.sh
 zsh
