@@ -10,3 +10,9 @@ brew install --cask visual-studio-code
 # install JB mono font
 brew tap homebrew/cask-fonts
 brew install --cask font-jetbrains-mono
+
+# raycast
+brew reinstall --cask raycast
+
+# gh cli
+brew install --cask gh
