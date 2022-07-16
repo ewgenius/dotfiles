@@ -12,7 +12,8 @@ brew install --cask notion
 brew install --cask telegram
 
 # Dev Tools
-brew tap homebrew/cask-fonts && brew install --cask font-jetbrains-mono
+brew tap homebrew/cask-fonts
+brew install --cask font-jetbrains-mono
 brew install --cask iterm2
 brew install --cask visual-studio-code
 brew install --cask gh
