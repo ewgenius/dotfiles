@@ -10,6 +10,7 @@ brew install --cask bitwarden
 brew install --cask brave-browser
 brew install --cask notion
 brew install --cask telegram
+brew install zsh
 
 # Dev Tools
 brew tap homebrew/cask-fonts
@@ -18,3 +19,6 @@ brew install --cask iterm2
 brew install --cask visual-studio-code
 brew install --cask gh
 brew install nvm
+
+# Configure
+sudo chsh -s /bin/zsh
