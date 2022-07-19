@@ -11,6 +11,7 @@ brew install --cask brave-browser
 brew install --cask notion
 brew install --cask telegram
 brew install zsh
+brew install docker
 
 # Dev Tools
 brew tap homebrew/cask-fonts
