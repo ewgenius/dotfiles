@@ -31,7 +31,7 @@ else
     
     if command_exists apt-get; then
         sudo apt-get update
-        sudo apt-get install -y fish tmux fzf ripgrep fd-find bat jq curl unzip
+        sudo apt-get install -y fish tmux fzf ripgrep fd-find bat jq curl unzip wget gpg
         
         # Install starship
         if ! command_exists starship; then
