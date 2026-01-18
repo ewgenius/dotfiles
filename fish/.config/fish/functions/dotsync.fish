@@ -1,4 +1,4 @@
-function sync
+function dotsync
   cd ~/dotfiles
   git add -A
   git status
