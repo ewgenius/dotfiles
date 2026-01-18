@@ -26,15 +26,44 @@ if [[ "$PLATFORM" == "macos" ]] || command_exists brew; then
         brew install fish tmux helix fzf ripgrep fd bat eza zoxide starship git-delta sesh jq
     fi
 else
-    # Linux without Homebrew - use native package manager
+    # Linux without Homebrew - use native package manager + manual installs
     log_step "Installing base packages via system package manager..."
     
     if command_exists apt-get; then
         sudo apt-get update
-        sudo apt-get install -y fish tmux fzf ripgrep fd-find bat zoxide jq
-        # Some packages need manual install on Debian/Ubuntu
-        log_warn "helix, eza, starship, git-delta, sesh may need manual installation"
-        log_info "Run: curl -sS https://starship.rs/install.sh | sh"
+        sudo apt-get install -y fish tmux fzf ripgrep fd-find bat jq curl unzip
+        
+        # Install starship
+        if ! command_exists starship; then
+            log_step "Installing starship..."
+            curl -sS https://starship.rs/install.sh | sh -s -- -y
+        fi
+        
+        # Install zoxide
+        if ! command_exists zoxide; then
+            log_step "Installing zoxide..."
+            curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+        fi
+        
+        # Install eza (modern ls)
+        if ! command_exists eza; then
+            log_step "Installing eza..."
+            sudo mkdir -p /etc/apt/keyrings
+            wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+            echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+            sudo apt-get update
+            sudo apt-get install -y eza
+        fi
+        
+        # Install helix
+        if ! command_exists hx; then
+            log_step "Installing helix..."
+            sudo add-apt-repository -y ppa:maveonair/helix-editor
+            sudo apt-get update
+            sudo apt-get install -y helix
+        fi
+        
+        log_warn "sesh, git-delta may need manual installation or use Homebrew"
         
     elif command_exists dnf; then
         sudo dnf install -y fish tmux fzf ripgrep fd-find bat eza zoxide jq
@@ -75,8 +104,7 @@ if [[ "$SHELL" != *"fish"* ]]; then
         fi
         
         if confirm "Set fish as default shell?" "y"; then
-            chsh -s "$FISH_PATH"
-            log_success "Fish set as default shell"
+            chsh -s "$FISH_PATH" || sudo chsh -s "$FISH_PATH" "$USER" || log_warn "Could not change shell, run manually: chsh -s $FISH_PATH"
         fi
     fi
 fi
