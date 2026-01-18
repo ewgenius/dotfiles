@@ -65,9 +65,13 @@ if command -q starship
     starship init fish | source
 end
 
-# fzf
+# fzf - use --fish for 0.48+, otherwise try legacy key-bindings
 if command -q fzf
-    fzf --fish 2>/dev/null | source
+    if fzf --fish &>/dev/null
+        fzf --fish | source
+    else if test -f /usr/share/doc/fzf/examples/key-bindings.fish
+        source /usr/share/doc/fzf/examples/key-bindings.fish
+    end
 end
 
 # zoxide
