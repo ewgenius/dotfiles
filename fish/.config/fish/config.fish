@@ -62,13 +62,15 @@ fish_add_path ~/.local/bin
 
 # Starship prompt
 if command -q starship
-    starship init fish | source
+    set -l starship_init (starship init fish 2>/dev/null)
+    test -n "$starship_init" && echo $starship_init | source
 end
 
 # fzf - use --fish for 0.48+, otherwise try legacy key-bindings
 if command -q fzf
-    if fzf --fish &>/dev/null
-        fzf --fish | source
+    set -l fzf_init (fzf --fish 2>/dev/null)
+    if test -n "$fzf_init"
+        echo $fzf_init | source
     else if test -f /usr/share/doc/fzf/examples/key-bindings.fish
         source /usr/share/doc/fzf/examples/key-bindings.fish
     end
@@ -76,7 +78,8 @@ end
 
 # zoxide
 if command -q zoxide
-    zoxide init fish | source
+    set -l zoxide_init (zoxide init fish 2>/dev/null)
+    test -n "$zoxide_init" && echo $zoxide_init | source
 end
 
 # Wasmer
