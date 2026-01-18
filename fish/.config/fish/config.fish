@@ -67,7 +67,7 @@ end
 
 # fzf
 if command -q fzf
-    fzf --fish | source
+    fzf --fish 2>/dev/null | source
 end
 
 # zoxide
@@ -78,7 +78,7 @@ end
 # Wasmer
 if test -d ~/.wasmer
     set -gx WASMER_DIR ~/.wasmer
-    test -s "$WASMER_DIR/wasmer.sh" && source "$WASMER_DIR/wasmer.sh"
+    fish_add_path $WASMER_DIR/bin
 end
 
 # Modular/Mojo
