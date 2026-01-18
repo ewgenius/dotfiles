@@ -1,0 +1,14 @@
+# Linux base packages (apt/dnf/pacman)
+# These are the package names for Debian/Ubuntu
+# Other distros may have slightly different names
+
+fish
+tmux
+fzf
+ripgrep
+bat
+jq
+stow
+curl
+wget
+git

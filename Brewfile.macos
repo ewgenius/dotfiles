@@ -1,0 +1,9 @@
+# macOS-specific CLI tools
+
+# macOS utilities
+brew "mas"           # Mac App Store CLI
+brew "trash"         # Move to trash instead of rm
+brew "duti"          # Set default applications
+
+# macOS integrations
+cask "1password-cli"

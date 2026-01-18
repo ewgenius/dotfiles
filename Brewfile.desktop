@@ -1,0 +1,27 @@
+# Desktop applications (macOS casks)
+
+# Terminal
+cask "ghostty"
+
+# Fonts
+tap "homebrew/cask-fonts"
+cask "font-jetbrains-mono"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-fira-code"
+cask "font-fira-code-nerd-font"
+
+# Productivity
+cask "raycast"
+cask "rectangle"
+
+# Development (optional - uncomment as needed)
+# cask "visual-studio-code"
+# cask "orbstack"
+
+# Browsers (optional)
+# cask "arc"
+# cask "firefox"
+
+# Utilities (optional)
+# cask "1password"
+# cask "tailscale"

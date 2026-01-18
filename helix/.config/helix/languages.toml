@@ -1,0 +1,9 @@
+
+[language-server.rust-analyzer.config.check]
+command = "clippy"
+features = "all"
+
+[[language]]
+name = "toml"
+formatter = { command = "taplo", args = ["fmt", "-"] }
+

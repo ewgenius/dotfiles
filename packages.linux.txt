@@ -1,0 +1,6 @@
+# Linux-specific packages
+
+# System utilities
+htop
+ncdu
+tree

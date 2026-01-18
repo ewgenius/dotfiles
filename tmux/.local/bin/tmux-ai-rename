@@ -1,0 +1,32 @@
+#!/bin/bash
+# AI-powered tmux session renamer using OpenCode
+
+# Get current pane's working directory
+pane_path=$(tmux display-message -p '#{pane_current_path}')
+
+# Convert to short path (replace $HOME with ~)
+short_path="${pane_path/#$HOME/\~}"
+
+# Capture pane content for context
+pane_content=$(tmux capture-pane -p -S -50 | tail -30)
+
+# Generate summary using OpenCode
+prompt="Based on this terminal content, generate a 2-4 word summary of what the user is working on.
+
+Terminal content:
+$pane_content
+
+Output ONLY the short summary, lowercase, no quotes, no explanation. Examples: 'tmux setup', 'api debugging', 'react components', 'git cleanup'"
+
+summary=$(opencode run -m anthropic/claude-haiku "$prompt" 2>/dev/null | grep -v '^\[' | grep -v '^$' | tail -1 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]')
+
+# Fallback if empty
+if [ -z "$summary" ]; then
+  summary="session"
+fi
+
+# Format: ~/path - summary
+suggested_name="$short_path - $summary"
+
+# Show prompt with suggested name, allow user to edit or confirm
+tmux command-prompt -I "$suggested_name" -p "Session name:" "rename-session '%%'"

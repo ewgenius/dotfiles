@@ -1,0 +1,41 @@
+# Base CLI tools - cross-platform via Homebrew
+
+# Shell and terminal
+brew "fish"
+brew "tmux"
+brew "starship"
+
+# Editors
+brew "helix"
+brew "neovim"
+
+# Search and navigation
+brew "fzf"
+brew "ripgrep"
+brew "fd"
+brew "zoxide"
+
+# File utilities
+brew "bat"
+brew "eza"
+brew "jq"
+brew "yq"
+
+# Git enhancements
+brew "git-delta"
+brew "gh"
+brew "git-town"
+
+# Session management
+brew "sesh"
+
+# Build tools
+brew "stow"
+brew "curl"
+brew "wget"
+
+# Version management
+brew "asdf"
+
+# Language servers / dev tools
+brew "tree-sitter"

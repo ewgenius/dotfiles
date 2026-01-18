@@ -1,0 +1,13 @@
+.DS_Store
+*.bak
+*.swp
+*~
+
+# Fish generated files (don't track)
+fish/.config/fish/fish_variables
+
+# OpenCode project-specific files
+opencode/.config/opencode/.opencode.json
+opencode/.config/opencode/bun.lock
+opencode/.config/opencode/node_modules/
+opencode/.config/opencode/package.json

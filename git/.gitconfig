@@ -1,0 +1,36 @@
+[includeIf "gitdir:~/Developer/Spice/"]
+    path = .gitconfig-spice
+
+[includeIf "gitdir:~/Developer/Personal/"]
+    path = .gitconfig-personal
+[includeIf "gitdir:~/Developer/Playground/"]
+    path = .gitconfig-personal
+[includeIf "gitdir:~/Developer/OpenSource/"]
+    path = .gitconfig-personal
+[includeIf "gitdir:~/Developer/BitBroz/"]
+    path = .gitconfig-personal
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[alias]
+	append = town append
+	compress = town compress
+	contribute = town contribute
+	diff-parent = town diff-parent
+	hack = town hack
+	kill = town kill
+	observe = town observe
+	park = town park
+	prepend = town prepend
+	propose = town propose
+	rename-branch = town rename-branch
+	repo = town repo
+	set-parent = town set-parent
+	ship = town ship
+	sync = town sync
+[init]
+	defaultBranch = main
+[user]
+	name = Evgenii Khramkov

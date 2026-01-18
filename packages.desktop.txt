@@ -1,0 +1,5 @@
+# Linux desktop packages
+
+# Fonts (Debian/Ubuntu names)
+fonts-jetbrains-mono
+fonts-firacode
