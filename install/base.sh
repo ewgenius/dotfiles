@@ -55,12 +55,23 @@ else
             sudo apt-get install -y eza
         fi
         
-        # Install helix
+        # Install helix via snap (PPA doesn't support all Ubuntu versions)
         if ! command_exists hx; then
             log_step "Installing helix..."
-            sudo add-apt-repository -y ppa:maveonair/helix-editor
-            sudo apt-get update
-            sudo apt-get install -y helix
+            if command_exists snap; then
+                sudo snap install helix --classic
+            else
+                # Fallback: download binary
+                HELIX_VERSION=$(curl -sL https://api.github.com/repos/helix-editor/helix/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+                ARCH=$(uname -m)
+                if [[ "$ARCH" == "aarch64" ]]; then
+                    curl -sL "https://github.com/helix-editor/helix/releases/latest/download/helix-${HELIX_VERSION}-aarch64-linux.tar.xz" | sudo tar -xJ -C /opt
+                    sudo ln -sf "/opt/helix-${HELIX_VERSION}-aarch64-linux/hx" /usr/local/bin/hx
+                else
+                    curl -sL "https://github.com/helix-editor/helix/releases/latest/download/helix-${HELIX_VERSION}-x86_64-linux.tar.xz" | sudo tar -xJ -C /opt
+                    sudo ln -sf "/opt/helix-${HELIX_VERSION}-x86_64-linux/hx" /usr/local/bin/hx
+                fi
+            fi
         fi
         
         log_warn "sesh, git-delta may need manual installation or use Homebrew"
