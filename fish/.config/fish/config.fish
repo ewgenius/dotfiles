@@ -57,6 +57,15 @@ if test -d $HOMEBREW_PREFIX/opt/openjdk@17
     set -gx JAVA_HOME $HOMEBREW_PREFIX/opt/openjdk@17
 end
 
+# Android SDK
+if test -d ~/Library/Android/sdk
+    set -gx ANDROID_HOME ~/Library/Android/sdk
+    set -gx ANDROID_SDK_ROOT ~/Library/Android/sdk
+    fish_add_path $ANDROID_HOME/platform-tools
+    fish_add_path $ANDROID_HOME/emulator
+    fish_add_path $ANDROID_HOME/tools/bin
+end
+
 # Local bin
 fish_add_path ~/.local/bin
 

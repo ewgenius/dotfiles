@@ -1,0 +1,26 @@
+#!/bin/bash
+# Start opencode server with tailscale serve
+# Waits for tailscale to be available before starting
+
+TAILSCALE="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+OPENCODE="$HOME/.opencode/bin/opencode"
+PORT=4096
+
+# Wait for tailscale to be connected (max 60 seconds)
+echo "Waiting for Tailscale..."
+for i in {1..60}; do
+    if $TAILSCALE status &>/dev/null; then
+        echo "Tailscale is ready"
+        break
+    fi
+    sleep 1
+done
+
+# Start tailscale serve in background
+echo "Starting Tailscale serve on port $PORT..."
+$TAILSCALE serve --bg http://127.0.0.1:$PORT 2>/dev/null || true
+
+# Start opencode server (this blocks)
+echo "Starting OpenCode server..."
+cd "$HOME"
+exec $OPENCODE serve --hostname 0.0.0.0 --cors '*'
