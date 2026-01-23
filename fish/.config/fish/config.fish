@@ -143,3 +143,6 @@ fish_add_path ~/.spice/bin
 fish_add_path ~/Developer/Personal/broom/dist
 fish_add_path ~/Developer/Personal/gyrus/dist
 fish_add_path ~/Developer/Tools/bin
+
+# opencode
+fish_add_path /Users/evgenii/.opencode/bin

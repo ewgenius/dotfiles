@@ -12,7 +12,7 @@ export const NotificationPlugin = async ({ $, directory, client }) => {
     try {
       if (isMac) {
         // Use osascript - shows Ghostty/Terminal icon (cleaner than terminal-notifier)
-        await $`osascript -e ${"display notification \"" + message + "\" with title \"" + title + "\" sound name \"default\""}`;
+        await $`osascript -e ${"display notification \"" + message + "\" with title \"" + title + "\" sound name \"Pop\""}`;
       } else if (isLinux) {
         await $`notify-send ${title} ${message}`.quiet();
       }

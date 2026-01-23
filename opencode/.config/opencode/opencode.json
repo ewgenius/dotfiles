@@ -8,5 +8,5 @@
       "command": ["gyrus", "mcp"]
     }
   },
-  "small_model": "github-copilot/gemini-3-flash-preview"
+  "small_model": "github-copilot/claude-haiku-4.5"
 }
