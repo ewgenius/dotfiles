@@ -146,3 +146,6 @@ fish_add_path ~/Developer/Tools/bin
 
 # opencode
 fish_add_path /Users/evgenii/.opencode/bin
+
+# gyrus alias
+alias g gyrus
