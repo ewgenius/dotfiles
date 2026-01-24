@@ -1,5 +1,13 @@
 function dotsync
   cd ~/dotfiles
+  
+  # Restow all packages to pick up new files
+  for pkg in fish ghostty git helix macos opencode tmux
+    if test -d $pkg
+      stow -R $pkg 2>/dev/null
+    end
+  end
+  
   git add -A
   git status
   read -P "Commit message: " msg
