@@ -23,6 +23,13 @@ function dotsync
   end
   
   git add -A
+  
+  # Check if there are changes to commit
+  if test -z "$(git status --porcelain)"
+    echo "✓ Dotfiles synced (nothing to commit)"
+    return 0
+  end
+  
   git status
   read -P "Commit message: " msg
   if test -n "$msg"
