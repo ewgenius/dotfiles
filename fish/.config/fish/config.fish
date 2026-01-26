@@ -56,6 +56,11 @@ if test -d $HOMEBREW_PREFIX/opt/node@22/bin
     fish_add_path $HOMEBREW_PREFIX/opt/node@22/bin
 end
 
+# nvm (via nvm.fish plugin)
+if test -d ~/.nvm
+    set -gx NVM_DIR ~/.nvm
+end
+
 # Java (Homebrew)
 if test -d $HOMEBREW_PREFIX/opt/openjdk@17
     fish_add_path $HOMEBREW_PREFIX/opt/openjdk@17/bin
