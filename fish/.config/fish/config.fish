@@ -4,6 +4,11 @@ end
 
 set fish_greeting ""
 
+# Fix TERM for tmux on Linux (SSH from Ghostty)
+if test (uname) = "Linux"
+    set -gx TERM xterm-256color
+end
+
 # Default editor
 set -gx EDITOR nvim
 set -gx VISUAL nvim

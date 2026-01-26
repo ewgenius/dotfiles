@@ -64,28 +64,11 @@ if [[ -f "$DOTFILES_DIR/packages.linux.txt" ]]; then
     fi
 fi
 
-# Setup systemd user service for tmux (similar to macOS LaunchAgent)
-if command_exists systemctl && [[ -d "$HOME/.config/systemd/user" ]] || mkdir -p "$HOME/.config/systemd/user"; then
-    TMUX_SERVICE="$HOME/.config/systemd/user/tmux.service"
-    if [[ ! -f "$TMUX_SERVICE" ]]; then
-        cat > "$TMUX_SERVICE" << 'EOF'
-[Unit]
-Description=Start tmux in detached session
-After=default.target
-
-[Service]
-Type=forking
-ExecStart=/usr/bin/tmux new-session -d -s main
-ExecStop=/usr/bin/tmux kill-server
-Restart=on-failure
-
-[Install]
-WantedBy=default.target
-EOF
-        systemctl --user daemon-reload
-        systemctl --user enable tmux.service
-        log_success "Tmux systemd service configured"
-    fi
+# Enable and start tmux systemd user service (installed via stow from tmux/.config/systemd/user/tmux.service)
+if command_exists systemctl && [[ -f "$HOME/.config/systemd/user/tmux.service" ]]; then
+    systemctl --user daemon-reload
+    systemctl --user enable --now tmux.service
+    log_success "Tmux systemd service enabled and started"
 fi
 
 log_success "Linux setup complete!"
