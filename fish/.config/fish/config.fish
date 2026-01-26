@@ -59,6 +59,13 @@ end
 # nvm (via nvm.fish plugin)
 if test -d ~/.nvm
     set -gx NVM_DIR ~/.nvm
+    # Add nvm's current node global bin to PATH
+    if test -d "$NVM_DIR/versions/node"
+        set -l current_node (ls -1 "$NVM_DIR/versions/node" 2>/dev/null | tail -1)
+        if test -n "$current_node"
+            fish_add_path "$NVM_DIR/versions/node/$current_node/bin"
+        end
+    end
 end
 
 # Java (Homebrew)
