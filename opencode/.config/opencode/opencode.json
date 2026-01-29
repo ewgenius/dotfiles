@@ -10,8 +10,22 @@
     "chrome-devtools": {
       "type": "local",
       "command": ["npx", "-y", "chrome-devtools-mcp@latest"],
-      "enabled": false
+      "enabled": true
+    },
+    "cloudflare": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "mcp-remote",
+        "https://docs.mcp.cloudflare.com/mcp"
+      ],
+      "enabled": true
     }
+  },
+  "tools": {
+    "chrome-devtools_*": false,
+    "cloudflare_*": false
   },
   "small_model": "github-copilot/claude-haiku-4.5",
   "plugin": ["opencode-gemini-auth@latest"]
