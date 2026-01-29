@@ -21,11 +21,17 @@
         "https://docs.mcp.cloudflare.com/mcp"
       ],
       "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "@playwright/mcp@latest"],
+      "enabled": true
     }
   },
   "tools": {
     "chrome-devtools_*": false,
-    "cloudflare_*": false
+    "cloudflare_*": false,
+    "playwright_*": false
   },
   "small_model": "github-copilot/claude-haiku-4.5",
   "plugin": ["opencode-gemini-auth@latest"]
