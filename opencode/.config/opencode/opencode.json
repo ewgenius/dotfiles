@@ -26,12 +26,18 @@
       "type": "local",
       "command": ["npx", "@playwright/mcp@latest"],
       "enabled": true
+    },
+    "yaak": {
+      "type": "local",
+      "command": ["npx", "-y", "mcp-remote", "http://127.0.0.1:64343/mcp"],
+      "enabled": true
     }
   },
   "tools": {
     "chrome-devtools_*": false,
     "cloudflare_*": false,
-    "playwright_*": false
+    "playwright_*": false,
+    "yaak_*": false
   },
   "small_model": "github-copilot/claude-haiku-4.5",
   "plugin": ["opencode-gemini-auth@latest"]
