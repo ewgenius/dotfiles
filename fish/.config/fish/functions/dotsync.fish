@@ -16,10 +16,12 @@ function dotsync
     end
   end
   
-  # Reload systemd service on Linux
+  # Reload systemd services on Linux
   if test (uname) = "Linux"; and command -q systemctl
     systemctl --user daemon-reload 2>/dev/null
     systemctl --user enable --now tmux.service 2>/dev/null
+    systemctl --user enable --now opencode.service 2>/dev/null
+    systemctl --user enable --now opencode-tailscale.service 2>/dev/null
   end
   
   git add -A
