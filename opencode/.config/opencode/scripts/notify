@@ -44,11 +44,11 @@ REPLY_TO=""
 THREAD_ID=""
 
 usage() {
-  echo "Usage: notify --chat <id> --text <message> [options]"
+  echo "Usage: notify --text <message> [options]"
   echo ""
   echo "Options:"
-  echo "  --chat <id>           Target chat ID (required)"
   echo "  --text <message>      Message text (required)"
+  echo "  --chat <id>           Target chat ID (optional, uses server default)"
   echo "  --parse-mode <mode>   MarkdownV2, HTML, or Markdown"
   echo "  --silent              Send without notification"
   echo "  --reply-to <id>       Reply to a specific message"
@@ -69,8 +69,8 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [ -z "$CHAT_ID" ] || [ -z "$TEXT" ]; then
-  echo "Error: --chat and --text are required" >&2
+if [ -z "$TEXT" ]; then
+  echo "Error: --text is required" >&2
   usage >&2
   exit 1
 fi
@@ -88,7 +88,8 @@ JSON=$(jq -n \
   --argjson silent "$SILENT" \
   --arg reply_to "$REPLY_TO" \
   --arg thread "$THREAD_ID" \
-  '{chat_id: $chat_id, text: $text} +
+  '{text: $text} +
+   (if $chat_id != "" then {chat_id: $chat_id} else {} end) +
    (if $parse_mode != "" then {parse_mode: $parse_mode} else {} end) +
    (if $silent then {disable_notification: true} else {} end) +
    (if $reply_to != "" then {reply_to_message_id: ($reply_to | tonumber)} else {} end) +

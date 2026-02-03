@@ -25,8 +25,8 @@ notify --chat "<chat_id>" --text "Your message here"
 
 | Option | Description |
 |--------|-------------|
-| `--chat <id>` | Target chat ID (required) |
 | `--text <message>` | Message text (required) |
+| `--chat <id>` | Target chat ID (optional, uses server default) |
 | `--parse-mode <mode>` | `MarkdownV2`, `HTML`, or `Markdown` |
 | `--silent` | Send without notification sound |
 | `--reply-to <message_id>` | Reply to a specific message |
@@ -34,29 +34,34 @@ notify --chat "<chat_id>" --text "Your message here"
 
 ## Examples
 
-Basic message:
+Basic message (uses server default chat):
 ```bash
-notify --chat "123456789" --text "Task completed successfully!"
+notify --text "Task completed successfully!"
 ```
 
 Formatted message (MarkdownV2):
 ```bash
-notify --chat "123456789" --text "Build *passed* ✅" --parse-mode MarkdownV2
+notify --text "Build *passed* ✅" --parse-mode MarkdownV2
 ```
 
 Silent notification:
 ```bash
-notify --chat "123456789" --text "Background job finished" --silent
+notify --text "Background job finished" --silent
+```
+
+Override chat ID:
+```bash
+notify --text "Message to specific chat" --chat "123456789"
 ```
 
 Reply to a message:
 ```bash
-notify --chat "123456789" --text "Done!" --reply-to 42
+notify --text "Done!" --reply-to 42
 ```
 
 Forum topic:
 ```bash
-notify --chat "123456789" --text "Update in thread" --thread 5
+notify --text "Update in thread" --thread 5
 ```
 
 ## MarkdownV2 Formatting
