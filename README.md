@@ -67,3 +67,66 @@ stow macos     # macOS LaunchAgent (optional)
 Installed automatically:
 - [Homebrew](https://brew.sh)
 - [GNU Stow](https://www.gnu.org/software/stow/)
+
+## Telegram Webhook Setup
+
+The `notify` OpenCode agent uses a helper script to send messages via Telegram. The secret is stored in your system keychain.
+
+### 1. Store the secret
+
+**macOS (Keychain):**
+```bash
+security add-generic-password -s "ewgenius-webhook-secret" -a "webhook" -w "YOUR_SECRET_HERE"
+```
+
+**Ubuntu/Linux (GNOME Keyring) - Desktop only:**
+```bash
+# Install if needed
+sudo apt install gnome-keyring libsecret-tools
+
+# Start the daemon (add to ~/.bashrc or ~/.zshrc for auto-start)
+eval $(gnome-keyring-daemon --start --components=secrets)
+
+# Store the secret
+secret-tool store --label="ewgenius-webhook-secret" service ewgenius-webhook-secret account webhook
+```
+
+**Linux (Headless/SSH) - File-based:**
+```bash
+# Create secrets directory with restricted permissions
+mkdir -p ~/.secrets
+chmod 700 ~/.secrets
+
+# Store the secret
+echo "YOUR_SECRET_HERE" > ~/.secrets/ewgenius-webhook-secret
+chmod 600 ~/.secrets/ewgenius-webhook-secret
+```
+
+### 2. Add the script to PATH
+
+The `telegram-send` script is in `~/.config/opencode/scripts/`. Add it to your PATH:
+
+```bash
+# Option A: Symlink to a directory in PATH
+ln -s ~/.config/opencode/scripts/notify ~/.local/bin/notify
+
+# Option B: Add scripts directory to PATH (in ~/.bashrc or ~/.zshrc)
+export PATH="$HOME/.config/opencode/scripts:$PATH"
+```
+
+### 3. Verify setup
+
+```bash
+# Check secret is stored
+# macOS:
+security find-generic-password -s "ewgenius-webhook-secret" -a "webhook" -w
+
+# Linux (GNOME Keyring):
+secret-tool lookup service ewgenius-webhook-secret account webhook
+
+# Linux (file-based):
+cat ~/.secrets/ewgenius-webhook-secret
+
+# Test the script
+notify --help
+```

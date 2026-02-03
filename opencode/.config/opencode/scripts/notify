@@ -1,0 +1,113 @@
+#!/bin/bash
+# notify - Send messages via Telegram Webhook API
+# Reads secret from system keychain (macOS), secret-tool (Linux), or ~/.secrets/ file
+
+set -euo pipefail
+
+WEBHOOK_URL="https://webhook.ewgenius.me/api/message"
+
+# Read secret from keychain or file
+get_secret() {
+  # macOS Keychain
+  if command -v security &> /dev/null; then
+    local secret
+    secret=$(security find-generic-password -s "ewgenius-webhook-secret" -a "webhook" -w 2>/dev/null) && [ -n "$secret" ] && echo "$secret" && return
+  fi
+  # Linux with secret-tool (GNOME Keyring / libsecret)
+  if command -v secret-tool &> /dev/null; then
+    local secret
+    secret=$(secret-tool lookup service ewgenius-webhook-secret account webhook 2>/dev/null) && [ -n "$secret" ] && echo "$secret" && return
+  fi
+  # File-based fallback (~/.secrets/)
+  if [ -f "$HOME/.secrets/ewgenius-webhook-secret" ]; then
+    cat "$HOME/.secrets/ewgenius-webhook-secret" 2>/dev/null && return
+  fi
+  return 1
+}
+
+SECRET=$(get_secret) || {
+  echo "Error: Could not retrieve webhook secret" >&2
+  echo "" >&2
+  echo "To store the secret:" >&2
+  echo "  macOS:    security add-generic-password -s 'ewgenius-webhook-secret' -a 'webhook' -w 'YOUR_SECRET'" >&2
+  echo "  Linux:    secret-tool store --label='ewgenius-webhook-secret' service ewgenius-webhook-secret account webhook" >&2
+  echo "  Fallback: mkdir -p ~/.secrets && echo 'YOUR_SECRET' > ~/.secrets/ewgenius-webhook-secret && chmod 600 ~/.secrets/ewgenius-webhook-secret" >&2
+  exit 1
+}
+
+# Parse arguments
+CHAT_ID=""
+TEXT=""
+PARSE_MODE=""
+SILENT=false
+REPLY_TO=""
+THREAD_ID=""
+
+usage() {
+  echo "Usage: notify --chat <id> --text <message> [options]"
+  echo ""
+  echo "Options:"
+  echo "  --chat <id>           Target chat ID (required)"
+  echo "  --text <message>      Message text (required)"
+  echo "  --parse-mode <mode>   MarkdownV2, HTML, or Markdown"
+  echo "  --silent              Send without notification"
+  echo "  --reply-to <id>       Reply to a specific message"
+  echo "  --thread <id>         Send to a forum topic"
+  echo "  --help                Show this help"
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --chat) CHAT_ID="$2"; shift 2 ;;
+    --text) TEXT="$2"; shift 2 ;;
+    --parse-mode) PARSE_MODE="$2"; shift 2 ;;
+    --silent) SILENT=true; shift ;;
+    --reply-to) REPLY_TO="$2"; shift 2 ;;
+    --thread) THREAD_ID="$2"; shift 2 ;;
+    --help) usage; exit 0 ;;
+    *) echo "Unknown option: $1" >&2; usage >&2; exit 1 ;;
+  esac
+done
+
+if [ -z "$CHAT_ID" ] || [ -z "$TEXT" ]; then
+  echo "Error: --chat and --text are required" >&2
+  usage >&2
+  exit 1
+fi
+
+# Build JSON payload using jq
+if ! command -v jq &> /dev/null; then
+  echo "Error: jq is required but not installed" >&2
+  exit 1
+fi
+
+JSON=$(jq -n \
+  --arg chat_id "$CHAT_ID" \
+  --arg text "$TEXT" \
+  --arg parse_mode "$PARSE_MODE" \
+  --argjson silent "$SILENT" \
+  --arg reply_to "$REPLY_TO" \
+  --arg thread "$THREAD_ID" \
+  '{chat_id: $chat_id, text: $text} +
+   (if $parse_mode != "" then {parse_mode: $parse_mode} else {} end) +
+   (if $silent then {disable_notification: true} else {} end) +
+   (if $reply_to != "" then {reply_to_message_id: ($reply_to | tonumber)} else {} end) +
+   (if $thread != "" then {message_thread_id: ($thread | tonumber)} else {} end)')
+
+# Send request
+response=$(curl -s -w "\n%{http_code}" -X POST "$WEBHOOK_URL" \
+  -H "Content-Type: application/json" \
+  -H "X-Webhook-Secret: $SECRET" \
+  -d "$JSON")
+
+# Parse response
+http_code=$(echo "$response" | tail -n1)
+body=$(echo "$response" | sed '$d')
+
+if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+  echo "$body"
+else
+  echo "Error: HTTP $http_code" >&2
+  echo "$body" >&2
+  exit 1
+fi
