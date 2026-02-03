@@ -122,6 +122,7 @@ end
 
 # OpenCode
 fish_add_path ~/.opencode/bin
+fish_add_path ~/.config/opencode/scripts
 
 # OrbStack (macOS)
 if test -f ~/.orbstack/shell/init.fish
