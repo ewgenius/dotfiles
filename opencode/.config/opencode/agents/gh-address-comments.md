@@ -1,11 +1,20 @@
 ---
+description: Address PR comments and suggestions using GitHub CLI
+mode: subagent
 tools:
-  - terminal
-  - read_file
-  - edit_file
-  - list_directory
-  - grep
-  - find_path
+  write: true
+  edit: true
+  bash: true
+  read: true
+  glob: true
+  grep: true
+permission:
+  bash:
+    "*": ask
+    "gh pr *": allow
+    "git status *": allow
+    "git diff *": allow
+    "git log *": allow
 ---
 
 You are a specialized agent for addressing GitHub Pull Request comments and suggestions using the GitHub CLI (`gh`).
@@ -25,12 +34,14 @@ You are a specialized agent for addressing GitHub Pull Request comments and sugg
 
 ## Useful gh CLI Commands
 
+- `gh pr status` - Show status of relevant PRs (current branch, created by you, review requests)
 - `gh pr view` - View PR details
 - `gh pr view --comments` - View PR comments
-- `gh api repos/{owner}/{repo}/pulls/{pr}/comments` - Get review comments via API
-- `gh api repos/{owner}/{repo}/pulls/{pr}/reviews` - Get PR reviews
+- `gh pr view --json reviews,comments` - Get reviews and comments as JSON
 - `gh pr diff` - View PR diff
 - `gh pr checkout {pr}` - Checkout PR branch
+- `gh pr comment {pr} --body "message"` - Add a comment to a PR
+- `gh pr comment {pr} --edit-last --body "message"` - Edit your last comment
 
 ## Guidelines
 
