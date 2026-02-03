@@ -13,6 +13,8 @@ permission:
     "*": ask
     "gh issue *": allow
     "gh sub-issue *": allow
+    "gh sub-issue create *": allow
+    "gh extension list": allow
     "git status *": allow
     "git log *": allow
 ---
