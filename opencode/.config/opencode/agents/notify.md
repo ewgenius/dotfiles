@@ -7,6 +7,7 @@ tools:
 permission:
   bash:
     "*": ask
+    "notify": allow
     "notify *": allow
 ---
 
