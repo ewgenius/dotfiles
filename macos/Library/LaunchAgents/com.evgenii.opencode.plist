@@ -6,7 +6,10 @@
     <string>com.evgenii.opencode</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/evgenii/.local/bin/opencode-server</string>
+        <string>/Users/evgenii/.opencode/bin/opencode</string>
+        <string>serve</string>
+        <string>--hostname</string>
+        <string>0.0.0.0</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
