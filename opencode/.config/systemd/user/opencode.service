@@ -2,7 +2,7 @@
 Description=OpenCode Server
 Documentation=https://opencode.ai/docs
 After=network-online.target
-Wants=network-online.target
+Wants=network-online.target opencode-tailscale.service
 StartLimitIntervalSec=300
 StartLimitBurst=5
 
