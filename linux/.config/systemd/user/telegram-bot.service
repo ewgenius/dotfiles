@@ -1,0 +1,32 @@
+[Unit]
+Description=Telegram OpenCode Bot
+Documentation=https://github.com/ewgenius/ewgenius-bot
+After=network-online.target opencode.service
+Wants=network-online.target
+Requires=opencode.service
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=exec
+WorkingDirectory=%h/ewgenius-bot/telegram-opencode-bot
+ExecStart=%h/.bun/bin/bun dist/index.js
+Restart=on-failure
+RestartSec=10
+
+# Environment
+Environment=NODE_ENV=production
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/ewgenius-bot/telegram-opencode-bot
+PrivateTmp=true
+
+# Resource limits
+MemoryMax=512M
+TasksMax=64
+
+[Install]
+WantedBy=default.target

@@ -37,6 +37,7 @@ stow git       # ~/.gitconfig
 stow helix     # ~/.config/helix/
 stow ghostty   # ~/.config/ghostty/
 stow opencode  # ~/.config/opencode/
+stow linux     # ~/.config/systemd/user/ (Linux services)
 stow macos     # macOS LaunchAgent (optional)
 ```
 
@@ -50,6 +51,7 @@ stow macos     # macOS LaunchAgent (optional)
 ├── helix/          # Helix editor config + themes
 ├── ghostty/        # Ghostty terminal config
 ├── opencode/       # OpenCode AI assistant config
+├── linux/          # Linux-specific (systemd user services)
 ├── macos/          # macOS-specific (LaunchAgent)
 ├── install/        # Installation scripts
 │   ├── bootstrap.sh   # Git + clone (curl-able)

@@ -7,6 +7,8 @@ function dotsync
   # Platform-specific packages
   if test (uname) = "Darwin"
     set packages $packages macos
+  else if test (uname) = "Linux"
+    set packages $packages linux
   end
   
   # Restow all packages to pick up new files

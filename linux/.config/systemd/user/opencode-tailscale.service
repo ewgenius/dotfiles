@@ -6,8 +6,7 @@ BindsTo=opencode.service
 PartOf=opencode.service
 
 [Service]
-Type=exec
-# Wait for opencode to be ready before starting tailscale serve
+Type=oneshot
 ExecStartPre=/bin/sleep 2
 ExecStart=/usr/bin/tailscale serve --bg --https=443 http://127.0.0.1:4096
 ExecStop=/usr/bin/tailscale serve reset

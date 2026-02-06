@@ -64,11 +64,16 @@ if [[ -f "$DOTFILES_DIR/packages.linux.txt" ]]; then
     fi
 fi
 
-# Enable and start tmux systemd user service (installed via stow from tmux/.config/systemd/user/tmux.service)
-if command_exists systemctl && [[ -f "$HOME/.config/systemd/user/tmux.service" ]]; then
+# Stow Linux-specific configs (systemd services)
+stow_package "linux"
+
+# Enable and start systemd user services
+if command_exists systemctl; then
     systemctl --user daemon-reload
     systemctl --user enable --now tmux.service
-    log_success "Tmux systemd service enabled and started"
+    systemctl --user enable --now opencode.service
+    systemctl --user enable --now opencode-tailscale.service
+    log_success "Systemd user services enabled and started"
 fi
 
 log_success "Linux setup complete!"
