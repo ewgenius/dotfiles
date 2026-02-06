@@ -1,0 +1,57 @@
+#!/bin/bash
+# tailscale-serve: Wait for opencode server, start tailscale serve, and monitor health.
+# Designed to run as a macOS LaunchAgent (KeepAlive + RunAtLoad).
+# If opencode goes down, this script exits so launchd can restart the cycle.
+
+set -euo pipefail
+
+PORT=4096
+OPENCODE_URL="http://127.0.0.1:${PORT}"
+WAIT_TIMEOUT=120    # seconds to wait for opencode on startup
+WAIT_INTERVAL=5     # seconds between polls during startup
+HEALTH_INTERVAL=30  # seconds between health checks
+MAX_FAILURES=3      # consecutive failures before exiting
+
+log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
+
+cleanup() {
+    log "Stopping: resetting tailscale serve..."
+    tailscale serve reset 2>/dev/null || true
+    log "Exiting."
+}
+trap cleanup EXIT
+
+# --- Phase 1: Wait for opencode to be ready ---
+log "Waiting for opencode at ${OPENCODE_URL} (timeout: ${WAIT_TIMEOUT}s)..."
+elapsed=0
+while ! curl -sf --max-time 2 "${OPENCODE_URL}" >/dev/null 2>&1; do
+    elapsed=$((elapsed + WAIT_INTERVAL))
+    if [ "$elapsed" -ge "$WAIT_TIMEOUT" ]; then
+        log "ERROR: opencode not ready after ${WAIT_TIMEOUT}s. Exiting."
+        exit 1
+    fi
+    log "  opencode not ready yet (${elapsed}s elapsed)..."
+    sleep "$WAIT_INTERVAL"
+done
+log "opencode is ready."
+
+# --- Phase 2: Start tailscale serve ---
+log "Starting tailscale serve --bg ${OPENCODE_URL}..."
+tailscale serve --bg "${OPENCODE_URL}"
+log "tailscale serve started."
+
+# --- Phase 3: Health-check loop ---
+failures=0
+while true; do
+    sleep "$HEALTH_INTERVAL"
+    if curl -sf --max-time 5 "${OPENCODE_URL}" >/dev/null 2>&1; then
+        failures=0
+    else
+        failures=$((failures + 1))
+        log "WARNING: opencode health check failed (${failures}/${MAX_FAILURES})"
+        if [ "$failures" -ge "$MAX_FAILURES" ]; then
+            log "ERROR: opencode unreachable after ${MAX_FAILURES} consecutive checks. Exiting."
+            exit 1
+        fi
+    fi
+done

@@ -3,21 +3,25 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.evgenii.tmux</string>
+    <string>com.evgenii.tailscale-serve</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/opt/homebrew/bin/tmux</string>
-        <string>start-server</string>
+        <string>/Users/evgenii/.local/bin/tailscale-serve</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
     <true/>
     <key>ThrottleInterval</key>
-    <integer>10</integer>
+    <integer>15</integer>
     <key>StandardOutPath</key>
-    <string>/tmp/tmux.log</string>
+    <string>/tmp/tailscale-serve.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/tmux.error.log</string>
+    <string>/tmp/tailscale-serve.error.log</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/Users/evgenii/.local/bin</string>
+    </dict>
 </dict>
 </plist>

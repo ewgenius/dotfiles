@@ -10,11 +10,19 @@
         <string>serve</string>
         <string>--hostname</string>
         <string>0.0.0.0</string>
+        <string>--port</string>
+        <string>4096</string>
+        <string>--cors</string>
+        <string>*</string>
     </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/evgenii</string>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
     <true/>
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
     <key>StandardOutPath</key>
     <string>/tmp/opencode.log</string>
     <key>StandardErrorPath</key>
