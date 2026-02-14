@@ -167,3 +167,9 @@ fish_add_path /Users/evgenii/.opencode/bin
 
 # gyrus alias
 alias g gyrus
+
+# Added by Antigravity
+fish_add_path /Users/evgenii/.antigravity/antigravity/bin
+
+# extt
+fish_add_path ~/.extt/bin
