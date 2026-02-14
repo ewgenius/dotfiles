@@ -52,8 +52,8 @@ if test -d ~/.bun
 end
 
 # Node (Homebrew)
-if test -d $HOMEBREW_PREFIX/opt/node@22/bin
-    fish_add_path $HOMEBREW_PREFIX/opt/node@22/bin
+if test -d $HOMEBREW_PREFIX/opt/node@24/bin
+    fish_add_path $HOMEBREW_PREFIX/opt/node@24/bin
 end
 
 # nvm (via nvm.fish plugin)
