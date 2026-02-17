@@ -2,7 +2,7 @@ function dotsync
   cd ~/dotfiles
   
   # Common packages for all platforms
-  set packages fish ghostty git helix opencode tmux
+  set packages fish gemini ghostty git helix opencode tmux
   
   # Platform-specific packages
   if test (uname) = "Darwin"

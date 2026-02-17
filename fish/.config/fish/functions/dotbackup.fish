@@ -8,6 +8,7 @@ function dotbackup
   cp -rL ~/.tmux.conf $backup_dir/ 2>/dev/null
   cp -rL ~/.config/helix $backup_dir/ 2>/dev/null
   cp -rL ~/.config/opencode $backup_dir/ 2>/dev/null
+  cp -rL ~/.gemini $backup_dir/ 2>/dev/null
   cp -rL ~/.config/ghostty $backup_dir/ 2>/dev/null
   cp -rL ~/.gitconfig $backup_dir/ 2>/dev/null
   

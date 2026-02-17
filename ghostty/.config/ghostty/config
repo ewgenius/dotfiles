@@ -19,7 +19,7 @@ window-height = 40
 window-save-state = always
 
 window-colorspace = "display-p3"
-macos-titlebar-style = tabs
+# macos-titlebar-style = tabs
 
 scrollback-limit = 1000000000
 
