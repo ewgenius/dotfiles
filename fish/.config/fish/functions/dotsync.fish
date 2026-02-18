@@ -2,7 +2,10 @@ function dotsync
   cd ~/dotfiles
 
   # Common packages for all platforms
-  set packages fish gemini ghostty git helix opencode tmux pi
+  set packages fish gemini ghostty git helix opencode tmux
+
+  # Packages that must merge with existing user config (no directory folding)
+  set merge_packages pi
 
   # Platform-specific packages
   if test (uname) = "Darwin"
@@ -15,6 +18,14 @@ function dotsync
   for pkg in $packages
     if test -d $pkg
       stow -R $pkg 2>/dev/null
+    end
+  end
+
+  # Restow merge packages with --no-folding to symlink individual files
+  # instead of entire directories, preserving user-local files (e.g. auth.json, sessions)
+  for pkg in $merge_packages
+    if test -d $pkg
+      stow -R --no-folding $pkg 2>/dev/null
     end
   end
 
