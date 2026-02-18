@@ -104,6 +104,7 @@ stow_package "fish"
 stow_package "tmux"
 stow_package "helix"
 stow_package "git"
+stow_package "pi"
 
 # Set fish as default shell if not already
 if [[ "$SHELL" != *"fish"* ]]; then
