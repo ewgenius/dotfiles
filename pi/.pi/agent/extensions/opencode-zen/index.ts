@@ -89,7 +89,6 @@ export default function (pi: ExtensionAPI) {
     apiKey: "OPENCODE_ZEN_API_KEY",
     // Use a custom API identifier so we can provide our own streamSimple
     api: "opencode-zen",
-    authHeader: true,
     streamSimple: zenStream,
 
     models: [
