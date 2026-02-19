@@ -228,9 +228,10 @@ Usage notes:
           details: {
             title,
             url: finalUrl,
-            contentType,
+            contentType
           },
         };
+
       } catch (error: any) {
         if (error.name === "AbortError") {
           throw new Error(`Request timed out after ${timeoutMs / 1000}s`);
