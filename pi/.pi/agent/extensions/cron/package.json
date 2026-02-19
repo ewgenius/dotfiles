@@ -1,0 +1,12 @@
+{
+  "name": "pi-cron",
+  "version": "1.0.0",
+  "description": "Schedule prompts to run at regular intervals",
+  "main": "index.ts",
+  "dependencies": {
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/node-cron": "^3.0.11"
+  }
+}
