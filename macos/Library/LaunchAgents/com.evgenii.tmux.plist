@@ -6,8 +6,9 @@
     <string>com.evgenii.tmux</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/opt/homebrew/bin/tmux</string>
-        <string>start-server</string>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/opt/homebrew/bin/tmux start-server 2&gt;/dev/null; PID=$(/opt/homebrew/bin/tmux display-message -p &quot;#{pid}&quot;); while kill -0 &quot;$PID&quot; 2&gt;/dev/null; do sleep 5; done</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
