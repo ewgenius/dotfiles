@@ -49,6 +49,24 @@ Usage notes:
         url = url.replace("http://", "https://");
       }
 
+      // Try to convert GitHub blob URLs to raw content
+      try {
+        const u = new URL(url);
+        if (u.hostname === "github.com") {
+          const parts = u.pathname.split('/');
+          // Expected: /, user, repo, blob, ref, ...path
+          if (parts.length >= 5 && parts[3] === "blob") {
+            u.hostname = "raw.githubusercontent.com";
+            // Remove 'blob'
+            parts.splice(3, 1);
+            u.pathname = parts.join('/');
+            url = u.toString();
+          }
+        }
+      } catch (e) {
+        // Ignore invalid URL errors here, they will be caught later
+      }
+
       const timeoutMs = Math.min(
         params.timeout ? params.timeout * 1000 : DEFAULT_TIMEOUT,
         MAX_TIMEOUT,
