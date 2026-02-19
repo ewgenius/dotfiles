@@ -1,11 +1,12 @@
 {
-  "lastChangelogVersion": "0.52.12",
-  "defaultProvider": "google-antigravity",
-  "defaultModel": "gemini-3-pro-high",
+  "lastChangelogVersion": "0.53.0",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "claude-opus-4.6",
   "defaultThinkingLevel": "off",
   "enabledModels": [
     "github-copilot/claude-opus-4.6",
     "google-antigravity/gemini-3-pro-high",
     "github-copilot/gpt-5.2-codex"
-  ]
+  ],
+  "skills": ["./.agents/skills"]
 }
