@@ -1,6 +1,6 @@
 function w
     if test (count $argv) -eq 0
-        echo "Usage: w <path> | w close"
+        echo "Usage: w <worktree-name> | w close"
         return 1
     end
 
@@ -26,7 +26,11 @@ function w
             return 1
         end
 
-        set -l wt_name (basename "$current_wt")
+        # Calculate worktree name relative to parent of main repo
+        # This matches how 'w' creates names (sibling to main repo)
+        set -l main_parent (dirname "$main_wt")
+        # We add a trailing slash to main_parent to ensure we only strip directory prefix
+        set -l wt_name (string replace "$main_parent/" "" "$current_wt")
         set -l repo_name (basename "$main_wt")
 
         read -P "Are you sure to delete worktree '$wt_name' for '$repo_name' repo? [y/N] " confirm
@@ -67,13 +71,18 @@ function w
         # ---------------------------------------------------------
         # CREATE SUBCOMMAND (Default)
         # ---------------------------------------------------------
-        set -l path $cmd
+        set -l wt_name $cmd
         
         # Check if inside git repo
         if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
             echo "Error: Not inside a git repository."
             return 1
         end
+        
+        # Calculate target path (sibling to current repo root)
+        set -l repo_root (git rev-parse --show-toplevel)
+        set -l parent_dir (dirname "$repo_root")
+        set -l path "$parent_dir/$wt_name"
 
         # Check if target directory already exists
         if test -d "$path"
@@ -94,9 +103,15 @@ function w
             return 1
         end
 
-        # Branch name from path basename
-        set -l clean_path (string trim -r -c / "$path")
-        set -l branch_name (basename "$clean_path")
+        # Branch name from worktree name
+        # If name contains slashes, we use it as is for branch name
+        set -l branch_name "$wt_name"
+        
+        # Ensure parent directory exists (for nested names like group/feature)
+        set -l target_parent (dirname "$path")
+        if not test -d "$target_parent"
+            mkdir -p "$target_parent"
+        end
         
         echo "Creating worktree at '$path'..."
 
@@ -120,8 +135,8 @@ function w
         set -l abs_path (pwd)
         popd >/dev/null
 
-        # Tmux session name = branch name
-        set -l session_name "$branch_name"
+        # Tmux session name = worktree name (exactly as provided)
+        set -l session_name "$wt_name"
         
         # Switch/Create tmux session
         if tmux has-session -t "=$session_name" 2>/dev/null
