@@ -173,3 +173,14 @@ fish_add_path /Users/evgenii/.antigravity/antigravity/bin
 
 # extt
 fish_add_path ~/.extt/bin
+
+# Tmux Theme Switcher
+function on_pwd_change --on-variable PWD
+    if test -n "$TMUX"
+        ~/.local/bin/tmux-theme-updater "$PWD"
+    end
+end
+# Run once on startup
+if test -n "$TMUX"
+    ~/.local/bin/tmux-theme-updater "$PWD"
+end
