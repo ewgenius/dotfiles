@@ -8,5 +8,5 @@
     "google-antigravity/gemini-3-pro-high",
     "github-copilot/gpt-5.2-codex"
   ],
-  "skills": [".agents/skills"]
+  "skills": ["./.agents/skills"]
 }
