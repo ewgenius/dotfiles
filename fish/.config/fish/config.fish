@@ -165,8 +165,8 @@ fish_add_path ~/Developer/Tools/bin
 # opencode
 fish_add_path /Users/evgenii/.opencode/bin
 
-# gyrus alias
-alias g gyrus
+# local binaries
+fish_add_path /Users/evgenii/.bin
 
 # Added by Antigravity
 fish_add_path /Users/evgenii/.antigravity/antigravity/bin
