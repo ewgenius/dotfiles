@@ -3,10 +3,9 @@ Description=tmux server
 After=default.target
 
 [Service]
-Type=oneshot
+Type=forking
 ExecStart=/usr/bin/tmux start-server
 ExecStop=/usr/bin/tmux kill-server
-RemainAfterExit=yes
 
 [Install]
 WantedBy=default.target
