@@ -163,13 +163,13 @@ fish_add_path ~/Developer/Personal/gyrus/dist
 fish_add_path ~/Developer/Tools/bin
 
 # opencode
-fish_add_path /Users/evgenii/.opencode/bin
+fish_add_path ~/.opencode/bin
 
 # local binaries
-fish_add_path /Users/evgenii/.bin
+fish_add_path ~/.bin
 
 # Added by Antigravity
-fish_add_path /Users/evgenii/.antigravity/antigravity/bin
+fish_add_path ~/.antigravity/antigravity/bin
 
 # extt
 fish_add_path ~/.extt/bin
