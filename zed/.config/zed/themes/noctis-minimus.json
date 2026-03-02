@@ -1,0 +1,30 @@
+{
+  "$schema": "https://zed.dev/schema/themes/v0.1.0.json",
+  "name": "Noctis",
+  "author": "Evgenii Khramkov",
+  "themes": [
+    {
+      "name": "Noctis Minimus",
+      "appearance": "dark",
+      "style": {
+        "background": "#1b2932",
+        "panel.background": "#1b2932",
+        "surface.background": "#1b2932",
+        "elevated_surface": "#1b2932",
+
+        "element.background": "#1b2932",
+        "editor.subheader.background": "#1b2932",
+
+        "editor.foreground": "#c5cdd3",
+        "editor.background": "#1b2932",
+
+        "foreground": "#c5cdd3",
+        "text.accent": "#6496b4",
+        "text.muted": "#96a8b6",
+
+        "border": "#101213",
+        "border.variant": "#496d83"
+      }
+    }
+  ]
+}

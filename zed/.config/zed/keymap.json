@@ -1,0 +1,26 @@
+[
+  {
+    "bindings": {
+      "cmd-r": "workspace::ToggleLeftDock",
+      "cmd-b": "workspace::ToggleRightDock",
+      "ctrl-shift-t": [
+        "task::Spawn",
+        {
+          "task_name": "Git: New Worktree"
+        }
+      ]
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "use_key_equivalents": true,
+    "bindings": {
+      "ctrl-enter": "assistant::InlineAssist"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-w": "git::Worktree"
+    }
+  }
+]

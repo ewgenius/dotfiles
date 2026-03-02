@@ -2,7 +2,7 @@ function dotsync
   cd ~/dotfiles
 
   # Common packages for all platforms
-  set packages fish gemini ghostty git helix opencode tmux
+  set packages fish gemini ghostty git helix opencode tmux zed
 
   # Packages that must merge with existing user config (no directory folding)
   set merge_packages pi

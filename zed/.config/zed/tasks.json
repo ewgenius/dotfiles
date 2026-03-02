@@ -1,0 +1,22 @@
+// Static tasks configuration.
+//
+// Example:
+[
+  {
+    "label": "Example task",
+    "command": "for i in {1..5}; do echo \"Hello $i/5\"; sleep 1; done",
+    "env": {
+      "foo": "bar"
+    },
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  },
+  {
+    "label": "Git: New Worktree",
+    "command": "bash -c 'name=${ZED_SELECTED_TEXT:my-feature}; git remote set-head origin --auto; default=$(git symbolic-ref refs/remotes/origin/HEAD | sed s|refs/remotes/origin/||); git fetch origin $default; git worktree add -b $name $(git rev-parse --show-toplevel)/../$name origin/$default'",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always"
+  }
+]

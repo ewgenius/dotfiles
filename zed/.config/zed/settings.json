@@ -1,0 +1,283 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without ch anging your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "updateImportsOnFileMove": {
+            "enabled": "never"
+          }
+        },
+        "javascript": {
+          "updateImportsOnFileMove": {
+            "enabled": "never"
+          }
+        }
+      },
+      "enable_lsp_tasks": true
+    }
+  },
+  "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    }
+  },
+  "context_servers": {
+    "gyrus": {
+      "enabled": true,
+      "command": "gyrus",
+      "args": [
+        "mcp"
+      ],
+      "env": {}
+    }
+  },
+  "colorize_brackets": true,
+  "bottom_dock_layout": "contained",
+  "edit_predictions": {
+    "provider": "zed",
+    "mode": "subtle",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null
+    },
+    "enabled_in_text_threads": false
+  },
+  "git_panel": {
+    "dock": "right"
+  },
+  "icon_theme": "Zed (Default)",
+  "vim_mode": false,
+  "notification_panel": {
+    "dock": "left"
+  },
+  "title_bar": {
+    "show_branch_icon": true
+  },
+  "toolbar": {
+    "breadcrumbs": true
+  },
+  "base_keymap": "VSCode",
+  "tabs": {
+    "file_icons": true
+  },
+  "tab_bar": {
+    "show": false
+  },
+  "agent": {
+    "tool_permissions": {
+      "default": "allow"
+    },
+    "favorite_models": [
+      {
+        "provider": "copilot_chat",
+        "model": "claude-opus-4.6",
+        "enable_thinking": false
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "claude-sonnet-4.6",
+        "enable_thinking": false
+      }
+    ],
+    "commit_message_model": {
+      "provider":"copilot_chat",
+      "model": "gpt-5-mini"
+    },
+    "play_sound_when_agent_done": false,
+    "inline_assistant_model": {
+      "provider": "copilot_chat",
+      "model": "gpt-5"
+    },
+    "profiles": {
+      "write": {
+        "name": "Write",
+        "tools": {
+          "terminal": true,
+          "batch_tool": true,
+          "code_actions": true,
+          "code_symbols": true,
+          "contents": true,
+          "copy_path": false,
+          "create_file": true,
+          "delete_path": false,
+          "diagnostics": true,
+          "edit_file": true,
+          "fetch": true,
+          "list_directory": false,
+          "move_path": false,
+          "now": true,
+          "find_path": true,
+          "read_file": true,
+          "grep": true,
+          "rename": true,
+          "symbol_info": true,
+          "thinking": true,
+          "web_search": true
+        },
+        "enable_all_context_servers": true,
+        "context_servers": {}
+      }
+    },
+    "default_profile": "write",
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4.6"
+    },
+    "dock": "left"
+  },
+  "autosave": "on_focus_change",
+  "terminal": {
+    "dock": "bottom",
+    "font_family": "TX-02 Condensed",
+    "font_size": 14,
+    "line_height": "standard",
+    "toolbar": {
+      "breadcrumbs": false
+    },
+    "scrollbar":{
+      "show":"never"
+    },
+    "detect_venv": {
+      "on": {
+        "directories": [".env", "env", ".venv", "venv"],
+        "activate_script": "fish"
+      }
+    }
+  },
+  "theme": {
+    "mode": "dark",
+    "dark": "Noctis",
+    "light": "Noctis Lux"
+  },
+  "buffer_font_size": 14,
+  "project_panel": {
+    "dock": "right"
+  },
+  "scrollbar": {
+    "show":"system"
+  },
+  "buffer_font_family": "TX-02 SemiCondensed",
+  "ui_font_family": "TX-02",
+  "format_on_save": "off",
+  "soft_wrap": "none",
+  "languages": {
+    "YAML": {
+      "format_on_save": "off"
+    },
+    "Swift": {
+      "format_on_save": "on"
+    },
+    "Rust": {
+      "formatter": "language_server",
+      "format_on_save": "on",
+      "inlay_hints": {
+        "enabled": true
+      }
+    },
+    "Go": {
+      "formatter": "language_server",
+      "format_on_save": "on"
+    },
+    "JavaScript": {
+      "formatter": "prettier",
+      "format_on_save": "on"
+    },
+    "JSON": {
+      "formatter": "prettier",
+      "format_on_save": "on"
+    },
+    "TSX": {
+      "formatter": ["prettier"],
+      "format_on_save": "on"
+    },
+    "TypeScript": {
+      "formatter": ["prettier"],
+      "format_on_save": "on"
+    },
+    "Plain Text": {
+      "soft_wrap": "none",
+      "show_wrap_guides": false,
+      "wrap_guides": []
+    },
+    "Markdown": {
+      // "soft_wrap": "preferred_line_length",
+      // "preferred_line_length": 80,
+      // "show_wrap_guides": true,
+      // "wrap_guides": [80]
+    }
+  },
+  "ssh_connections": [
+    {
+      "host": "workbox.ewgenius.me",
+      "username": "ewgenius",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/ewgenius"
+          ]
+        },
+        {
+          "paths": [
+            "/home/ewgenius/Developer/notion-agent/notion-opencode-bridge"
+          ]
+        }
+      ]
+    }
+  ]
+
+  // "lsp": {
+  //   "rust-analyzer": {
+  //     "initialization_options": {
+  //       // get more cargo-less diagnostics from rust-analyzer,
+  //       // which might include false-positives (those can be turned off by their names)
+  //       "diagnostics": {
+  //         "experimental": {
+  //           "enable": true
+  //         }
+  //       },
+  //       // To disable the checking entirely
+  //       // (ignores all cargo and check settings below)
+  //       "checkOnSave": false,
+  //       // To check the `lib` target only.
+  //       "cargo": {
+  //         "allTargets": false
+  //       },
+  //       // Use `-p` instead of `--workspace` for cargo check
+  //       "check": {
+  //         "workspace": false
+  //       }
+  //     }
+  //   }
+  // }
+
+  // "lsp": {
+  //   "rust-analyzer": {
+  //     "initialization_options": {
+  //       "inlayHints": {
+  //         "enabled": true,
+  //         // "show_type_hints": true,
+  //         // "show_parameter_hints": true,
+  //         // "show_other_hints": true,
+  //         // "edit_debounce_ms": 700,
+  //         "maxLength": null,
+  //         "lifetimeElisionHints": {
+  //           "enable": "skip_trivial",
+  //           "useParameterNames": true
+  //         },
+  //         "closureReturnTypeHints": {
+  //           "enable": "always"
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+}
