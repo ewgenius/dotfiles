@@ -102,13 +102,13 @@ function w
         # Check if branch exists locally
         if git show-ref --verify --quiet "refs/heads/$branch_name"
             echo "Branch '$branch_name' exists. Checking out..." >&2
-            if not git worktree add "$path" "$branch_name"
+            if not git worktree add "$path" "$branch_name" >&2
                 echo "Error: Failed to checkout existing branch '$branch_name'." >&2
                 return 1
             end
         else
             echo "Creating new branch '$branch_name' from '$default_branch'..." >&2
-            if not git worktree add -b "$branch_name" "$path" "$default_branch"
+            if not git worktree add -b "$branch_name" "$path" "$default_branch" >&2
                 echo "Error: Failed to create new worktree/branch." >&2
                 return 1
             end
