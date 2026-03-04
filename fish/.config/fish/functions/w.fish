@@ -1,3 +1,7 @@
+# Git worktree manager
+# Usage:
+#   w <name>   - create worktree at sibling path, prints the resolved path
+#   w close    - remove current worktree and return to main
 function w
     if test (count $argv) -eq 0
         echo "Usage: w <worktree-name> | w close"
@@ -10,32 +14,30 @@ function w
         # ---------------------------------------------------------
         # CLOSE SUBCOMMAND
         # ---------------------------------------------------------
-        
+
         # Check git
         if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
-            echo "Error: Not inside a git repository."
+            echo "Error: Not inside a git repository." >&2
             return 1
         end
 
         set -l current_wt (git rev-parse --show-toplevel)
         # Get main worktree path (first line of worktree list porcelain output)
         set -l main_wt (git worktree list --porcelain | head -n1 | string replace 'worktree ' '')
-        
+
         if test "$current_wt" = "$main_wt"
-            echo "Error: You are in the main worktree. Cannot close."
+            echo "Error: You are in the main worktree. Cannot close." >&2
             return 1
         end
 
         # Calculate worktree name relative to parent of main repo
-        # This matches how 'w' creates names (sibling to main repo)
         set -l main_parent (dirname "$main_wt")
-        # We add a trailing slash to main_parent to ensure we only strip directory prefix
         set -l wt_name (string replace "$main_parent/" "" "$current_wt")
         set -l repo_name (basename "$main_wt")
 
         read -P "Are you sure to delete worktree '$wt_name' for '$repo_name' repo? [y/N] " confirm
         if test "$confirm" != "y" -a "$confirm" != "Y"
-            echo "Aborted."
+            echo "Aborted." >&2
             return 0
         end
 
@@ -44,41 +46,25 @@ function w
 
         # Remove worktree
         if git worktree remove "$current_wt"
-            echo "Worktree '$wt_name' removed."
-            
-            # Tmux handling
-            if test -n "$TMUX"
-                set -l current_session (tmux display-message -p "#S")
-                # If current session matches worktree name
-                if test "$current_session" = "$wt_name"
-                    # Switch to main repo session (repo_name)
-                    # Create if not exists
-                    if not tmux has-session -t "=$repo_name" 2>/dev/null
-                        tmux new-session -d -s "$repo_name" -c "$main_wt"
-                    end
-                    tmux switch-client -t "=$repo_name"
-                    # Kill old session
-                    tmux kill-session -t "$current_session"
-                end
-            end
+            echo "Worktree '$wt_name' removed." >&2
         else
-            echo "Failed to remove worktree. It might contain modified or untracked files."
-            echo "Use 'git worktree remove --force $current_wt' manually if you want to force delete."
+            echo "Failed to remove worktree. It might contain modified or untracked files." >&2
+            echo "Use 'git worktree remove --force $current_wt' manually if you want to force delete." >&2
             return 1
         end
 
     else
         # ---------------------------------------------------------
-        # CREATE SUBCOMMAND (Default)
+        # CREATE SUBCOMMAND
         # ---------------------------------------------------------
         set -l wt_name $cmd
-        
+
         # Check if inside git repo
         if not git rev-parse --is-inside-work-tree >/dev/null 2>&1
-            echo "Error: Not inside a git repository."
+            echo "Error: Not inside a git repository." >&2
             return 1
         end
-        
+
         # Calculate target path (sibling to current repo root)
         set -l repo_root (git rev-parse --show-toplevel)
         set -l parent_dir (dirname "$repo_root")
@@ -86,7 +72,7 @@ function w
 
         # Check if target directory already exists
         if test -d "$path"
-            echo "Error: Directory '$path' already exists."
+            echo "Error: Directory '$path' already exists." >&2
             return 1
         end
 
@@ -99,59 +85,38 @@ function w
         else if git rev-parse --verify origin/master >/dev/null 2>&1
             set default_branch "origin/master"
         else
-            echo "Error: Could not determine default branch."
+            echo "Error: Could not determine default branch." >&2
             return 1
         end
 
-        # Branch name from worktree name
-        # If name contains slashes, we use it as is for branch name
         set -l branch_name "$wt_name"
-        
+
         # Ensure parent directory exists (for nested names like group/feature)
         set -l target_parent (dirname "$path")
         if not test -d "$target_parent"
             mkdir -p "$target_parent"
         end
-        
-        echo "Creating worktree at '$path'..."
+
+        echo "Creating worktree at '$path'..." >&2
 
         # Check if branch exists locally
         if git show-ref --verify --quiet "refs/heads/$branch_name"
-            echo "Branch '$branch_name' exists. Checking out..."
+            echo "Branch '$branch_name' exists. Checking out..." >&2
             if not git worktree add "$path" "$branch_name"
-                 echo "Error: Failed to checkout existing branch '$branch_name'."
-                 return 1
+                echo "Error: Failed to checkout existing branch '$branch_name'." >&2
+                return 1
             end
         else
-            echo "Creating new branch '$branch_name' from '$default_branch'..."
+            echo "Creating new branch '$branch_name' from '$default_branch'..." >&2
             if not git worktree add -b "$branch_name" "$path" "$default_branch"
-                 echo "Error: Failed to create new worktree/branch."
-                 return 1
+                echo "Error: Failed to create new worktree/branch." >&2
+                return 1
             end
         end
 
-        # Resolve absolute path for tmux
+        # Resolve and print the absolute path (stdout, for callers to capture)
         pushd "$path" >/dev/null
-        set -l abs_path (pwd)
+        echo (pwd)
         popd >/dev/null
-
-        # Tmux session name = worktree name (exactly as provided)
-        set -l session_name "$wt_name"
-        
-        # Switch/Create tmux session
-        if tmux has-session -t "=$session_name" 2>/dev/null
-            if test -n "$TMUX"
-                tmux switch-client -t "=$session_name"
-            else
-                tmux attach -t "=$session_name"
-            end
-        else
-            if test -n "$TMUX"
-                tmux new-session -d -s "$session_name" -c "$abs_path"
-                tmux switch-client -t "=$session_name"
-            else
-                tmux new-session -s "$session_name" -c "$abs_path"
-            end
-        end
     end
 end
