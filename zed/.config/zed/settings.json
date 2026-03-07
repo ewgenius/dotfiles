@@ -85,6 +85,11 @@
         "provider": "copilot_chat",
         "model": "claude-sonnet-4.6",
         "enable_thinking": false
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "gpt-5.4",
+        "enable_thinking": false
       }
     ],
     "commit_message_model": {
@@ -129,7 +134,7 @@
     "default_profile": "write",
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.6"
+      "model": "gpt-5.4"
     },
     "dock": "left"
   },
