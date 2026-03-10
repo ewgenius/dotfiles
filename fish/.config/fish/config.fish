@@ -184,3 +184,6 @@ end
 if test -n "$TMUX"
     ~/.local/bin/tmux-theme-updater "$PWD"
 end
+
+# opencode
+fish_add_path /Users/evgenii/.opencode/bin

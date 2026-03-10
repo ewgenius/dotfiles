@@ -236,6 +236,18 @@
           ]
         }
       ]
+    },
+    {
+      "host": "40.90.248.154",
+      "username": "dot",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/dot"
+          ]
+        }
+      ]
     }
   ]
 
