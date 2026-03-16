@@ -133,6 +133,7 @@
     },
     "default_profile": "write",
     "default_model": {
+      "enable_thinking": true,
       "provider": "copilot_chat",
       "model": "claude-sonnet-4.6"
     },
