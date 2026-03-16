@@ -1,0 +1,46 @@
+{
+  "version": 3,
+  "skills": {
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "installedAt": "2026-01-29T01:09:08.454Z",
+      "updatedAt": "2026-03-16T01:44:23.805Z"
+    },
+    "skill-logger": {
+      "source": "erichowens/some_claude_skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/erichowens/some_claude_skills.git",
+      "skillPath": ".claude/skills/skill-logger/SKILL.md",
+      "skillFolderHash": "6a6012da7eed6a267a805a961b2db35e45be7c19",
+      "installedAt": "2026-03-03T07:54:36.368Z",
+      "updatedAt": "2026-03-16T01:44:45.870Z"
+    },
+    "openlogs-server-logs": {
+      "source": "charlietlamb/openlogs",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/charlietlamb/openlogs.git",
+      "skillPath": "skills/openlogs-server-logs/SKILL.md",
+      "skillFolderHash": "42fb220fe9596d6a30679940ecdf44082a166954",
+      "installedAt": "2026-03-16T01:41:26.682Z",
+      "updatedAt": "2026-03-16T01:41:26.682Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "cline",
+    "codex",
+    "cursor",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-cli",
+    "opencode",
+    "warp"
+  ]
+}
