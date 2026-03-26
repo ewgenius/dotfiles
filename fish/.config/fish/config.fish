@@ -168,8 +168,8 @@ fish_add_path ~/.opencode/bin
 # local binaries
 fish_add_path ~/.bin
 
-# Added by Antigravity
-fish_add_path ~/.antigravity/antigravity/bin
+# Obsidian CLI
+fish_add_path /Applications/Obsidian.app/Contents/MacOS
 
 # extt
 fish_add_path ~/.extt/bin
@@ -187,3 +187,5 @@ end
 
 # opencode
 fish_add_path /Users/evgenii/.opencode/bin
+
+set -gx PATH "/Users/evgenii/.pixi/bin" $PATH

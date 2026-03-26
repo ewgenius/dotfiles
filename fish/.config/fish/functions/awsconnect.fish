@@ -2,13 +2,21 @@ function awsconnect --description 'Connect to AWS with selected profile'
     # Get profiles from ~/.aws/credentials (lines like [profile-name])
     set -l cred_profiles
     if test -f ~/.aws/credentials
-        set cred_profiles (grep -oE '^\[.+\]' ~/.aws/credentials | tr -d '[]')
+        while read -l line
+            if string match -qr '^\[.+\]$' -- $line
+                set -a cred_profiles (string replace -r '^\[(.+)\]$' '$1' -- $line)
+            end
+        end < ~/.aws/credentials
     end
 
     # Get profiles from ~/.aws/config (lines like [profile profile-name])
     set -l config_profiles
     if test -f ~/.aws/config
-        set config_profiles (grep -oE '^\[profile .+\]' ~/.aws/config | sed 's/\[profile //' | tr -d ']')
+        while read -l line
+            if string match -qr '^\[profile .+\]$' -- $line
+                set -a config_profiles (string replace -r '^\[profile (.+)\]$' '$1' -- $line)
+            end
+        end < ~/.aws/config
     end
 
     # Combine and deduplicate profiles

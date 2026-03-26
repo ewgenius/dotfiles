@@ -25,19 +25,15 @@
     }
   },
   "agent_servers": {
+    "claude-acp": {
+      "type": "registry"
+    },
     "opencode": {
       "type": "registry"
     }
   },
   "context_servers": {
-    "gyrus": {
-      "enabled": true,
-      "command": "gyrus",
-      "args": [
-        "mcp"
-      ],
-      "env": {}
-    }
+
   },
   "colorize_brackets": true,
   "bottom_dock_layout": "contained",
@@ -51,6 +47,7 @@
     "enabled_in_text_threads": false
   },
   "git_panel": {
+    "tree_view": true,
     "dock": "right"
   },
   "icon_theme": "Zed (Default)",
@@ -133,6 +130,7 @@
     },
     "default_profile": "write",
     "default_model": {
+      "effort": "high",
       "enable_thinking": true,
       "provider": "copilot_chat",
       "model": "claude-sonnet-4.6"
@@ -165,7 +163,8 @@
   },
   "buffer_font_size": 14,
   "project_panel": {
-    "dock": "right"
+    "dock": "right",
+    "git_status_indicator": true
   },
   "scrollbar": {
     "show":"system"
@@ -250,7 +249,8 @@
         }
       ]
     }
-  ]
+  ],
+
 
   // "lsp": {
   //   "rust-analyzer": {
